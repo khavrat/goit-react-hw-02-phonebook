@@ -15,12 +15,27 @@ class App extends Component {
   };
 
   handleCreateContact = newContact => {
-    // console.log(newContact);
     const { contacts } = this.state;
-    this.setState(state => ({
-      contacts: [newContact, ...contacts],
+
+    if (
+      contacts.find(
+        contact =>
+          contact.name.toLocaleLowerCase() ===
+          newContact.name.toLocaleLowerCase()
+      )
+    ) {
+      alert(`${newContact.name} is already in contacts`);
+    } else {
+      this.setState(prevState => ({
+        contacts: [newContact, ...prevState.contacts],
+      }));
+    }
+  };
+
+  deleteContact = contactId => {
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== contactId),
     }));
-    console.log('newContact :>> ', newContact);
   };
 
   changeFilter = e => {
@@ -42,9 +57,7 @@ class App extends Component {
     return (
       <div>
         <h1>Phonebook</h1>
-        <ContactForm
-          onCreateContact={this.handleCreateContact}
-        />
+        <ContactForm onCreateContact={this.handleCreateContact} />
 
         <h2>Contacts</h2>
         <ContactFilter
@@ -52,7 +65,10 @@ class App extends Component {
           changeFilter={this.changeFilter}
         ></ContactFilter>
 
-        <ContactList visibleContacts={visibleContacts} />
+        <ContactList
+          visibleContacts={visibleContacts}
+          onDeleteContact={this.deleteContact}
+        />
       </div>
     );
   }

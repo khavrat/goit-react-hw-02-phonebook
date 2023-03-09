@@ -1,5 +1,7 @@
 import { Component } from 'react';
 import shortid from 'shortid';
+import PropTypes from 'prop-types';
+
 
 class ContactForm extends Component {
   state = {
@@ -7,15 +9,22 @@ class ContactForm extends Component {
     number: '',
   };
 
+  static propTypes = {
+    onCreateContact: PropTypes.func.isRequired,
+  };
+
+
   handleChange = e => {
     console.log(e.currentTarget.value);
     const { name, value } = e.currentTarget;
     this.setState({ [name]: value });
   };
 
+
   reset = () => {
     this.setState({ name: '', number: '' });
   };
+
 
   getNewContact = () => {
     const { name, number } = this.state;
@@ -28,6 +37,7 @@ class ContactForm extends Component {
     return newContact;
   };
 
+
   handleSubmit = e => {
     const { onCreateContact } = this.props;
     e.preventDefault();
@@ -38,6 +48,7 @@ class ContactForm extends Component {
     this.reset();
   };
 
+  
   render() {
     const { name, number } = this.state;
 
@@ -46,6 +57,7 @@ class ContactForm extends Component {
         <label>
           Name
           <input
+            className="input"
             type="text"
             name="name"
             value={name}
@@ -58,6 +70,7 @@ class ContactForm extends Component {
         <label>
           Number
           <input
+            className="input"
             type="tel"
             name="number"
             value={number}
