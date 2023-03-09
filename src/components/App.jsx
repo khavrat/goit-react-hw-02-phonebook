@@ -2,15 +2,11 @@ import { Component } from 'react';
 import ContactForm from './ContactForm/ContactForm';
 import ContactList from './ContactList/ContactList';
 import ContactFilter from './ContactFilter/ContactFilter';
+import { Phonebook, PhonebookTitle, ContactsTitle } from './App.styled';
 
 class App extends Component {
   state = {
-    contacts: [
-      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-    ],
+    contacts: [],
     filter: '',
   };
 
@@ -55,11 +51,11 @@ class App extends Component {
     const visibleContacts = this.visibleContacts();
 
     return (
-      <div>
-        <h1>Phonebook</h1>
+      <Phonebook>
+        <PhonebookTitle>Phonebook</PhonebookTitle>
         <ContactForm onCreateContact={this.handleCreateContact} />
 
-        <h2>Contacts</h2>
+        <ContactsTitle>Contacts</ContactsTitle>
         <ContactFilter
           filter={filter}
           changeFilter={this.changeFilter}
@@ -69,7 +65,7 @@ class App extends Component {
           visibleContacts={visibleContacts}
           onDeleteContact={this.deleteContact}
         />
-      </div>
+      </Phonebook>
     );
   }
 }
